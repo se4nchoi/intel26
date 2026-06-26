@@ -13,13 +13,14 @@ Daily notes from the Intel-26 Busan program.
 ---
 
 ## Repository Structure
-
-Month/
-Date(MMDD)/
-├── hello.py
-├── notes.txt
-└── ...
-
+```
+Month
+├── Date(MMDD)
+    ├── hello.py    
+    ├── notes.txt    
+    └── ...
+```
+    
 02_TBD/
 03_TBD/
 
