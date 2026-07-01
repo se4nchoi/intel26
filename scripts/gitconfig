@@ -1,0 +1,13 @@
+[alias]
+        graph = log --all --graph --decorate
+	cm = commit -m
+	st = status
+	sw = switch
+        uncommit = reset HEAD~1
+        recommit = commit --amend --no-edit
+        editmsg = commit --amend	
+	
+	ai-msg = "!~/.local/bin/git-ai-msg"
+	ai-commit = "!f() { git commit -e -m \"$(git ai-msg \"$@\")\"; }; f"
+[push]
+        default = current

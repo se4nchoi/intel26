@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+prompt='Write a structured Git commit message based on this diff.
+
+The output MUST follow this exact layout:
+
+feat: short summary here
+
+- Bullet point explaining change A
+- Bullet point explaining change B
+
+Rules:
+1. Ensure there is a blank line separating the summary and bullets.
+2. Do not wrap the output in markdown.
+3. No conversational text.
+4. Keep bullets under 80 characters.'
+
+if [ $# -gt 0 ]; then
+    prompt="$prompt
+
+Additional instructions:
+$*"
+fi
+
+git diff --staged | llm -m llama3.2:3b "$prompt"
