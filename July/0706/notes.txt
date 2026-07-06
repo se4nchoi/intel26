@@ -1,0 +1,67 @@
+```
+Some notes from lectures
+```
+Korea is a strong manufacturing country. <<< very big advantage
+
+DX -> digital transformation is rapid;
+- all manufacturing processes are being translated into digital data -- a massive advantage to set up transition
+
+AX -> AI transformation
+- Korea aims to be #3 (just behind US and China) in AI
+- many initiatives being launched to integrate AI into the country's ecosystems
+
+
+Also,
+Electricity bottleneck will determine the oncoming era
+- nuclear, renewable energy to become key
+- the only pro-US country to have built nuclear plants = Korea, France
+- variable generation still needs management (thermal esp. to manage peak/trough demands)
+
+with all these infrastructures incoming; 
+where can I target ?
+
+just being a entry hire for a 대기업 be sufficient? 
+-> no. I need to manage my narrative to tailor strengths/projects in the direction of the next focus areas of investments
+  => which then could lead me back to North America
+
+really helpful if you have a target company, field, job description;
+you can tailor things to your portfolio to stand out, and be hirable
+build things into your portfolio ?
+=> use SCAMPER, and add to your github !
+=> code with AI; vibe code ? but know your foundations.
+
+=====
+Python Things.
+
+- class, inheritance, polymorphism
+=> needed to revisit python specific concepts and executions
+(e.g. class hierarchy, method resolution order, 'super()', '__dict__')
+dict = namespace of object ?
+- iterator, generator
+=> may need it for memory efficiency ?
+
+understanding python from a 'object' based approach when thinking about relationships
+& thinking from how something looks in memory is really helpful for me.
+
+=====
+
+Coded a GUI app, a markdown notepad with Cursor AI (before it ran out tokens)
+surprisingly easy if i knew what to tell the AI. 
+- set up architecture with ChatGPT, then vibe coded it with Cursor AI
+- didn't understand a single thing about Python GUI, QTBrowser, or QTWebEngine, but it worked
+- did have to run back and forth between wsl and real windows to get out of WSLg rabbit hole
+
+Like the prof said, these days are governed by the capacity to be able to use the tools available;
+With my background, I feel there is more to leverage, but if I didn't know the exact terminology
+like 'editor', 'GUI', or understanding of how markdown is converted -- i.e. domain knowledge,
+it would be more difficult.
+
+DO: expanding on domain knowledge, and trying to actually build and leverage the tools available
+
+*important*
+== the grand scheme of problem solving ==
+- recognize what the problem is
+- assess what tools you have
+- think about how you can use the tools to solve the problem
+- if you can't, consult with AI !
+- with the broadened knowledge you can recursively ask better questions to AI, and get better answers
