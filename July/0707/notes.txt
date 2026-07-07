@@ -1,0 +1,16 @@
+Pandas!
+
+extended from numpy -- learning about Python's data analysis libraries
+
+dataframe, series
+
+since I understand a bit about how a schema/table works, I should know 
+how this extends into my knowledgebase ? (i.e. why is Pandas necessary) 
+
+=========
+
+pandas, scikit-learn, matplotlib, numpy
+-> all to get a starting foot off in introduction to Machine Learning
+* re-using pre-trained models, then fitting features to label;
+
+everything is input, process, output. 
