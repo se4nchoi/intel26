@@ -1,0 +1,198 @@
+GitHub Organization 협업 실습
+==============================
+
+목표
+----
+4인 팀이 하나의 공용 파일을 각자 브랜치에서 수정하고,
+Pull Request, Review, Merge, Merge Conflict 해결 과정을 실습합니다.
+
+예상 시간: 약 20분
+
+
+1. 저장소 준비
+-------------
+
+팀장 또는 저장소 담당자가 GitHub Organization 안에 저장소를 생성합니다.
+
+예시 저장소 이름:
+
+github-org-practice
+
+저장소에는 아래 두 파일을 main 브랜치에 먼저 추가합니다.
+
+- instruction.txt
+- team-file.txt
+
+
+2. 저장소 Clone
+---------------
+
+각 팀원은 저장소를 자신의 컴퓨터에 clone합니다.
+
+git clone <repository-url>
+cd github-org-practice
+
+
+3. 역할 분담
+------------
+
+팀원 A 예현
+- Team Name 수정
+- Member 1 수정
+
+팀원 채원
+- Member 2 수정
+- Team Goal 수정
+
+팀원 동현
+- Member 3 수정
+- Favorite Tools 수정
+
+팀원 한별
+- Member 4 수정
+- Pull Request reviewer 역할
+
+주의:
+각 팀원은 자신의 브랜치에서만 작업합니다.
+
+
+4. 브랜치 생성
+--------------
+
+각자 자신의 이름 또는 역할에 맞는 브랜치를 하나 생성합니다.
+
+예시:
+
+git switch -c feature/member-a
+
+다른 팀원 예시:
+
+feature/member-b
+feature/member-c
+feature/member-d
+
+
+5. team-file.txt 수정
+---------------------
+
+각자 맡은 부분을 수정합니다.
+
+예시:
+
+Team Name: Git Avengers
+
+Members:
+- Member 1: Sean
+- Member 2:
+- Member 3:
+- Member 4:
+
+Team Goal:
+TBD
+
+Favorite Tools:
+TBD
+
+
+6. Commit 및 Push
+-----------------
+
+수정한 파일을 commit하고 자신의 브랜치를 원격 저장소에 push합니다.
+
+git add team-file.txt
+git commit -m "Add member information"
+git push -u origin feature/member-a
+
+브랜치 이름은 본인이 만든 브랜치 이름으로 변경합니다.
+
+
+7. Pull Request 생성
+--------------------
+
+GitHub에서 자신의 브랜치를 main 브랜치로 병합하는 Pull Request를 생성합니다.
+
+예시:
+
+feature/member-a -> main
+
+Pull Request 설명 예시:
+
+변경 내용
+- 팀 이름 추가
+- Member 1 정보 추가
+
+확인 요청
+- 기존 파일 형식이 유지되는지 확인해주세요.
+
+
+8. Review 및 Merge
+------------------
+
+다른 팀원 한 명이 Pull Request를 확인합니다.
+
+확인할 내용:
+
+- 맡은 부분만 수정했는지
+- 다른 팀원의 내용이 삭제되지 않았는지
+- 파일 형식이 유지되는지
+
+문제가 없다면 Approve 후 Merge합니다.
+
+
+9. Merge Conflict 실습
+----------------------
+
+Conflict를 확실하게 발생시키기 위해 팀원 A와 팀원 B가
+각자의 브랜치에서 아래 같은 줄을 서로 다르게 수정합니다.
+
+기존 내용:
+
+Team Goal:
+TBD
+
+팀원 A 수정 예시:
+
+Team Goal:
+Learn GitHub collaboration
+
+팀원 B 수정 예시:
+
+Team Goal:
+Become pull request masters
+
+팀원 A의 Pull Request를 먼저 merge합니다.
+
+이후 팀원 B의 Pull Request에는 conflict가 발생할 수 있습니다.
+
+
+10. Conflict 해결
+-----------------
+
+팀원 B는 자신의 로컬 브랜치에서 main 브랜치의 변경 내용을 가져옵니다.
+
+git switch feature/member-b
+git fetch origin
+git merge origin/main
+
+team-file.txt 안에 아래와 같은 conflict marker가 표시됩니다.
+
+<<<<<<< HEAD
+Become pull request masters
+=======
+Learn GitHub collaboration
+>>>>>>> origin/main
+
+두 내용을 하나로 합쳐 수정합니다.
+
+예시:
+
+Team Goal:
+Learn GitHub collaboration and master pull requests
+
+수정 후 다시 commit하고 push합니다.
+
+git add team-file.txt
+git commit -m "Resolve team goal conflict"
+git push
+
+기존 Pull Request에 자동으로 반영됩니다.

@@ -1,0 +1,6 @@
+A short summary of today:
+
+- introductory git + github tutorial by TAs
+- helped out the team with AI-generated collaboration exercise
+- used the time to update my github
+  - cleaned up repos, updated READMEs
