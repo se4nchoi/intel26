@@ -1,0 +1,47 @@
+곱하기 = double word 지정
+--- [* k1 k200 d0] 
+	d0 는 d0,d1포함 32 bit 전체가 연산 최종값
+
+* 지정시 짝수 레지스터 d 를 주는게 맘이 편하다.
+
+PLC는 몫/나머지 나누기 (due to memory contraints)
+--- [/P k3 k2 d0] 
+	d0, d1 32비트 자동 지정; 
+	d0, d1 따로따로 각각 나머지(d1), 몫(d0)
+
+
+float x float 연산은 그냥 안됨;
+
+
+bitwise extraction from D register:
+
+d1.0 => 0th bit
+d1.1 => 1st bit
+d1.2 => 2nd bit
+
+so if ligthing lamp:
+
+d1.2	d1.1	d1.0
+y32 	y31 	y30
+0	0	0
+0	0	1
+0	1	0
+0	1	1
+1	0	0
+
+
+========================
+	Z0 -- index register
+========================
+
+convenient!
+incp z1 on button press to control many outputs
+
+
+========================
+	Analog Input/Output 모듈	
+========================
+
+if in doubt, just reset the program/parameters
+-> load a new project, empty fresh MAIN
+-> ! always RESET PLC after a parameter change

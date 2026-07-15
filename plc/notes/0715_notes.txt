@@ -1,0 +1,15 @@
+===================================
+	MC / MCR 마스터컨트롤 set/reset
+===================================
+
+;선택회로;
+;수동회로;
+;자동회로;
+;공통회로;
+*필수적으로 구분해야함
+
+N0 << highest priority during race conditions
+
+-> 이 nesting 은 그냥 if statement 안속으로 nesting 하는 개념과 똑같음; 
+queue 개념으로 N 을 닫으면 ok.
+-> 마지막에 만약 MCR 로 닫는 부분만 있다면 (사이에 회로 X) 그냥 MCR N0 하면 다 닫힘.
