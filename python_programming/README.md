@@ -13,7 +13,7 @@ Python programming materials from the Intel-26 K-DT training program.
 - Introductory machine learning
 - Regression and classification
 - Coding-test and problem-solving practice
-- AI-first exam
+- Prompt-based software exam
 
 ## Structure
 
