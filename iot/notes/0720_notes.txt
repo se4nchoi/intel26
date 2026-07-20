@@ -1,0 +1,29 @@
+==============
+	IoT 인줄 알았던 ...
+	python programming extended.
+==============
+
+* env 세팅을 위해... start from scratch
+
+
+요즘 대세는, uv 를 활용한 (still no 1.0 release, iterating on base 0.x versions, but super good so widely begin used)
+- rust-based environment settings for python
+(옛날에는 아나콘다니 venv니, 세팅이 묶이는 경향이 있었음. then enter uv.
+
+```
+uv run main.py
+uv pip install package_name
+```
+
+easier!
+
+그래서 새로 업데이트된 pwsh (powershell v 7) 설치, vs code 설치, python 재설치 등. 진행하는 중
+
+
+** uv add ....
+- only add packages after you activate venv !
+
+uv add ...
+uv init <folder_name> python=3.14
+uv activate
+uv run x.py
