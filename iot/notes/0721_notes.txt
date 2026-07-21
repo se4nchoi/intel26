@@ -1,0 +1,79 @@
+0721_notes
+
+
+
+VM environment settings
+
+- Download VirtualBox image (Ubuntu), Windows Host, mobaxterm
+- setting up the VM environment
+- NAT Network + network port forwarding : guest IP
+
+
+now that we have the vms running, we need the next env settings
+
+1) ssh *			openssh-server
+2) web server		apache2, nginx
+3) db server		mariadb
+4) assign static IP *	/etc/netplan
+
+
+sudo apt install openssh-server
+sudo systemctl status ssh
+sudo systemctl start ssh
+
+# Port Forwarding
+apps, are targetable with ports.
+- rule of thumb, assign ports for forwarding past 6000; below 6000 are usually pre-assigned
+
+
+pwd : asdf;lkj
+
+# Static IP assignment
+==============
+cd /etc/netplan
+sudo vi 50  ... (tab)
+# after edit
+sudo netplan apply
+
+50 ... .yaml 	= set static public IP address
+		= find localhost gateway (usually 192.168. X . 1)
+		= assign default DNS to KT or universal fallback (cloudflare, Google)
+
+
+# basic Vim
+==============
+# now i know a few things...
+# gg, G, yy, p, i, esc, dd
+
+:set nu 		view/unview line numbers
+:set nonu
+
+:3 => move to line 3
+
+
+um... there was a port forwarding assignment error, but resolved.
+
+- one error was assigning local client ip to 198.162 instead of 192.168 ... 
+- port forwarding after setting the network attachment (NAT + machine port fwd vs NAT network + network port fwd)
+
+all fixed!
+
+now onto env settings for this linux VM to run our MLOps
+
+install uv
+uv init py_test --python=3.12
+uv venv
+uv add jupyterlab ipykernel matplotlib numpy pandas
+
+
+
+apache2
+- uses /var/www/html as default source of serving htmls
+
+
+Accessing remote shellls through VS Code SSH/Tunneling extensions
+- set up on ssh/.config
+Host 
+hostname 
+port
+user ...

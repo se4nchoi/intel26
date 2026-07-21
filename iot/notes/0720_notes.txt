@@ -27,3 +27,19 @@ uv add ...
 uv init <folder_name> python=3.14
 uv activate
 uv run x.py
+
+======
+Getting Into MLOps / Cloud Infra
+======
+
+- managing VMs for ML operations
+- was debating WSL2 + Docker, and VMs
+- so AWS EC2 are basically VMs...
+
+so in terms of managing infra/equipment ? VM concepts are important.
+
+for the context of this teaching module
+- the user assignment and previleges may be a little mixed for WSL2
+- using VM to spin up a linux environment
+- in practice and development, Dockers are widely used
+- fundamentals of SSH, terminal access to servers.
