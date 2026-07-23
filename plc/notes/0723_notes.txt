@@ -1,0 +1,23 @@
+A full morning block dedicated to practicing PLC programming with practice exam questions.
+
+====
+
+I was interested in the other part of the certification exam : CAD design.
+
+looked up a tutorial guide series (there should be many), and activated a student SOLIDWORKS license
+
+https://www.youtube.com/watch?v=h1qP8S3EfiM&list=PL7cdZvpViYLqbmxoUSohLKH95q-GL1iCr
+
+
+
+====
+
+- after working through 1~2 problems, realized I still need refresher on 'counter' loop (iterate n times of certain process)
+- finished #9 of exam practice set
+
+====
+
+in prep for tomorrow's class, we discussed how to actually wire up a circuit. (easy stuff!)
+- but we'll have to see how it turns out in reality.
+
+
