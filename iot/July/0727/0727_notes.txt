@@ -1,0 +1,41 @@
+=======================
+	IoT ?
+=======================
+
+
+good refresher on binary,hex,dec ... 
+as well as computer architecture overview
+
+CPU
+- sole job is to 
+	- fetch
+	- decode
+	- execute
+
+has mainly 3 units : Control Unit, ALU, registers
+- the decoding, signalling circuit to perform a specific instruction --
+incrementing program counter, handling interrupts, send read signal to RAM, etc. etc...
+- the math/computation. compare, add, sub,....
+- hold data. 
+
+
+I'm feeling that this is a setup to prepare the class for 'memory mapped I/O', 
+which is core in controlling peripheral devices like sensors in IoT...
+
+- but I was wrong! 
+
+
+Moved on to circuitry basics, explaining how we can control DC motor with pulse widths to modulate RPM
+(for a 24V motor, supplying clocks that fill 80% will give about 19.2V power, which will pull a 20k RPM motor down to 16k)
+
+Also, while discussing now circuitry, mentioned short circuits, and how the internals of the PLC 'switches' will actually have some resistance to prevent shorting.
+
+Rule of thumb: never connect a circuit with no load.
+
+- Pull UP / DOWN circuitry.
+- tied into theory of NPN, PNP transistor types, and how PLC is configured with what type of transistors.
+- conclusion is, what we want is having signal 1 when button/switch is pressed.
+	- so depending on the type of PLC (npn or pnp), configuring the circuit is up to the engineer
+	- i.e. setting up the diode/LED transistor to put HIGH signal (whether to choose PULL UP/DOWN)
+
+
