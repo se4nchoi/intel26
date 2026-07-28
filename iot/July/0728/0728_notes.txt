@@ -1,0 +1,13 @@
+Understanding how computer treats data. 
+- data types, signed,unsigned, 2's compliments; how computer treats computation (A - B = A + !B + 1)
+- byte addresses
+- overflows
+
+=> overall, a introductory theory class continued from yesterday. good refresher on bit logic
+
+Transistors
+- as I've organized on my iPad, trip down memory lane to be reminded on transistors and its use in our context of circuits
+- controlling activation of a output circuit from a smaller input circuit (i.e. MCU 5V to activate a 24V press or a 220V motor)
+- (and how if a base is narrow we can 'amplify' current / more like activate)
+- some transistor foundations revisited; P, N Junctions on diodes, as well as emittor/base/collector structure
+- voltage controlled & resistor controlled motor RPM
