@@ -1,0 +1,73 @@
+PLC Programming
+===============
+
+Touch Panel Design ?
+(some circuits are sensible only in touch panel ??)
+
+
+GP-Pro EX - PLC Touch Panel Setting
+
+GP 3000 series
+GP-34 ** series (the # after 3, 4 x 2 = 8 ~= inches of the panel, 7.5 inch)
+AGP - 3400T
+
+접속기기(device connection) setting 
+
+Manufacturer : Mitsubishi Electric
+Sereis : Q Series CPU Direct 
+Port : COM 1/2
+
+
+-> yep. the HMI, or panel design portion was today's lesson
+I can see how my older chat discussions with Gemini had prompted me towards combining "HMI"
+stuff after I saw some of the previous classes... instructor 'showcased' some of the previous great submissions
+(beautiful screens using the GP Pro EX lines,shapes,button images, etc...)
+
+but im here thinking: 
+- what is the use if human interaction on interfaces are going to be obsolete ?
+
+while it is useful still it will come to an end, no ?
+
+i understand that not everything needs to be on the 'web' or server databases, and close proximity to time-sensitive equipment
+is very very crucial.
+
+but the 'beautiful things' can be crafted by importing images, or powerpoint-style shape manipulations, isn't the important thing knowing how to 
+1) create the logic ladder program do perform an action
+2) map the ladder logic to an intuitive screen ?
+
+well, my thoughts from the morning block.
+
+
+some useful functionalities or SW controlled interface:
+
+- 다중함수리스트 (grouping switch/inputs) - single switch turns on all in group
+- 확장-> 그룹기능 (exclusive switches, 자동 OFF 그룹)
+	=> should use right click -> clone (복제, w) to use auto increment for x10~x14
+- 스위치 공통 
+-> 인터록 - SW controlled interlock (FWD, REVERSE)
+-> 지연기능 - on delay, off delay
+-> 더블터치 - press once, then press again within given window to send 1
+
+
+Word Switch
+- 자릿수 가산 [ 0000 / 0000 / 0000 / 0000 ]
+		4	3	2	1
+해당 자릿수에 1 씩 더하니, 1, 16, 256, 4096 씩 증가됨
+
+
+===
+more interface design... swtiches -> no shape == press 'text' to transition to different screens (메인 / 감시 / 조작)
+
+transition based on register value (i.e. if temp >= 85, mov d1111 K99 ; 99th page = high temp alert page
+
+====
+
+did a solidworks tutorial for certificate exam - 1
+=> a little clumsy, but got through it
+
+====
+
+further work on HMI screen.
+will probably continue on for tomorrow as well.
+there are multiple advantages in using a SW controlled method (while the internal hardware logic is in place from ladder logic)
+- mentioned especially useful for servo motor control with the HMI
