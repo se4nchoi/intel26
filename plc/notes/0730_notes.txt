@@ -1,0 +1,40 @@
+PLC Class
+===========
+
+continuation of GX Pro HMI Screen Design
+
+- using graphs to display data register values with visible scales
+- animation 
+	visibility -> could be useful display something has filled a spot via a signal (i.e. a parking spot open/occupied to be shown on HMI for a park tower)
+	x/y horizontal/vertical movement
+	(but are animations all that important ??)
+
+
+! also, keep the user (i.e. operator) able to function! (no need for A/S travel :) )
+-> how to perform diagnostics, and represent the info on the HMI
+
+
+== Neat feature (?) of HMI ? "Alarm"
+
+공통설정 -> 알람
+-> 이력 => LOG capability
+
+then put the ALARM component to wire it up;
+- trigger setting => 메세지 (make global string array for detailed error explanation)
+- 부표시 화면번호 1 (or # of string array)
+(bit monitoring, word monitoring)
+
+on signal X firing HIGH for an error state (push cylinder not moving)
+- automatic alarm page transition (secure memory mapped transition i.e. D100 as transition screen # memory)
+
+Project Window -> System Setting -> 본체설정 -> 시스템 데이터 영역 사용
+-> "전환 화면 번호"
+
+==> should have much more capability as a Logging feature
+
+-lol and there is too much talk about how servo motors will be horrendous for us (over 1000 error codes, very nice to have AAAAAALLLL of these capabilities)
+
+
+and we are moving towards more 'memory-mapped I/O'
+(passing error codes to a register to be read by another system)
+easy ? maybe.

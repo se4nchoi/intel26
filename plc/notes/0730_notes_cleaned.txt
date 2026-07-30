@@ -1,0 +1,93 @@
+PLC Class
+=========
+
+Continuation of GP-Pro EX HMI Screen Design
+
+
+1. Data Visualization and Animation
+-----------------------------------
+
+- Use graphs to display data-register values with visible scales.
+
+- HMI animation options:
+  - Visibility based on signals
+    Example: show whether a parking spot is open or occupied.
+  - X/Y movement for horizontal or vertical motion.
+
+- Animation is useful when it represents equipment status clearly.
+  Visual effects themselves are not the main objective.
+
+
+2. Diagnostics and Operator Recovery
+------------------------------------
+
+- The HMI should help the operator identify and respond to faults.
+
+- Keep the machine operable without requiring unnecessary professional A/S visits.
+
+- The operator should be able to determine:
+  - What failed?
+  - Where did it fail?
+  - What can be checked or recovered independently?
+
+
+3. GP-Pro EX Alarm Feature
+--------------------------
+
+Menu:
+Common Settings -> Alarm -> History
+(공통설정 -> 알람 -> 이력)
+
+- Alarm history provides logging capability.
+
+- Add an Alarm component and configure:
+  - Trigger setting
+  - Detailed error message
+  - Sub-display screen number
+  - Bit monitoring or word monitoring
+
+- A global string array can store detailed fault explanations.
+
+Example:
+
+Push-cylinder command is active.
+-> Cylinder does not move within the allowed time.
+-> PLC produces an error signal or code.
+-> HMI displays the corresponding alarm and diagnostic message.
+
+
+4. Automatic Alarm-Screen Transition
+------------------------------------
+
+Menu:
+Project Window -> System Setting -> Main Unit Settings
+-> Use System Data Area -> Change Screen Number
+
+(Project Window -> System Setting -> 본체설정
+-> 시스템 데이터 영역 사용 -> 전환 화면 번호)
+
+- A data register such as D100 can hold the screen number.
+- The PLC can write the alarm-screen number to trigger an automatic transition.
+- The screen should still allow the operator to use necessary controls.
+
+
+5. Memory-Mapped Diagnostics
+----------------------------
+
+Fault occurs
+-> PLC detects and assigns a fault code.
+-> Error code is written to a data register.
+-> HMI or another system reads and displays it.
+
+- This becomes especially important for complex equipment such as servo motors,
+  which may have many possible error codes.
+
+
+Learned Objectives
+==================
+
+1. Display PLC data clearly using graphs and meaningful animation.
+2. Detect faults through PLC diagnostic logic.
+3. Represent the fault location, cause, and recovery information on the HMI.
+4. Configure alarm history and automatic alarm-screen transitions.
+5. Understand registers as interfaces for sharing diagnostic codes between systems.
