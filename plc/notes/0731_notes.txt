@@ -1,0 +1,14 @@
+PLC Programming -- end of Module:
+
+- final exam; just some test-procedure test + HMI synchronization
+- was not bad, but had couple of issues that dragged out my exam time (finished in 1 hour, but could have been 30min)
+  - solenoid common was not put to GND (thought something was wrong with my ladder logic)
+  - a cylinder was required to go fwd/bk 3-times, but forgot to interlock between each cycle
+- HMI was a little iffy too, since i forgot interlock for increment/decrement of the 3 cycles
+  - also didn't have a proper clock up/down to increment cycle count (finished at 2, since all went BKRST after set completion to not increment D register to 3)
+  - the animation-register needed interlocks too, since it was incrementing and decrementing at the same time
+
+===
+later, in the afternoon block, we did physical wiring of the self-hold circuit but with a standalone PLC (GLOFA, MasterK, etc)
+
+not too bad.
