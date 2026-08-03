@@ -1,0 +1,30 @@
+IoT Monitoring 
+
+- start off with C++ before we touch arduinos ?
+
+keywords suggested for lookup on beginning of class:
+- arduino, raspberry pi
+- edge computing
+- CLI, GUI
+- headerfiles, library
+- OS
+
+=> I can vision where this is leading into... but will all classmates do ?
+
+
+Anyhow, what was done throughout the lectures today:
+
+- configured Visual Studio for C++ environment settings (IDE)
+- went through slides after slides of (boring) syntax and characteristics of C++
+
+honestly, this is where I put the least attention and was just solving ADsP problems
+
+- converting between C++, python (or other languages)
+
+The takeaway may be, that programming languages fundamentally share common purposes that 
+provide similar capabilities; 
+and that often a similar type of pattern can be repeated in a different language.
+
+so it is the problem of finding the right type of logic to problem solve, 
+and not much of a problem of syntax memorization. 
+Although the actual step of putting down the code usually IS required, so theres that.
