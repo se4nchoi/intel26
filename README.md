@@ -14,6 +14,10 @@ Python fundamentals, object-oriented programming, NumPy, Pandas, data analysis, 
 
 Mitsubishi MELSEC-Q PLC programming using GX Works2, including ladder logic, sequence control, I/O mapping, HMI screens, and automation exercises.
 
+### [IoT and Edge Computing](iot/)
+
+Basic C++ programming and an introduction to edge computing with Arduino and Raspberry Pi, including networking, GPIO, and connected-device exercises.
+
 Additional course areas may be added as the program progresses.
 
 ## Repository Structure
@@ -30,4 +34,9 @@ intel26/
 │   ├── hmi-screens/
 │   ├── notes/
 │   └── plc-io-map.xlsx
+├── iot/
+│   ├── July/
+│   ├── Aug/
+│   ├── library-simulator-py/
+│   └── windows-calculator-py/
 └── README.md
