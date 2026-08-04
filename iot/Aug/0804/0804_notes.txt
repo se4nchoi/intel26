@@ -1,0 +1,3 @@
+- a project-based learning session for getting used to C++ and python;
+  - basically more familiarity being enforced with 'programming', still.
+  - not a real iot focus yet
