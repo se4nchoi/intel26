@@ -1,0 +1,44 @@
+PLC
+==================
+
+today's todo:
+- HMI programming, with ethernet connection
+
+new room, new configs. 
+
+1) you need to confirm IP address with an initial USB connection FIRST
+(plc, usb, no spec => check connection)
+-> and perform a RESET of CPU to apply the IP addr
+
+2) create a 2nd connection setting - ETHERNET
+this room has the Q03UDV CPU, so has direct ETHERNET connection (diff from Q02H, where you needed to use an ethernet module)
+
+
+====
+practice for HMI integration/coursework :
+
+simulate (with HMI), a 4-way intersection
+- left + straight  green, with left turn ending earlier to allow opposite lane to go straight
+- 워드 제어 -> 4 x 4 traffic light signals
+
+
+====
+so, the assignment was done okay.
+drawing the screen was a bit of work, started around 11:00 am, got through the initial 1/4 signalling before lunch, then finished the entire 4-way intersection within 1 hour after lunch ?
+
+then from 3 pm, tried to implement additional features:
+- flashing pedestrain signal, cleaning up bloated states
+- helped other classmates
+
+my approach was to distinguish the intersection as a state machine,
+define different states and configure (word-write to output address) the corresponding 16-bit signal
+
+- i think there were basically 3 ways to do this:
+1) bit control (coupling each signal to a state's definition in parallel)
+2) word control (my method)
+3) bit shift (prof's method)
+
+I chose (2), and there were pros and cons to this; 
+the bloat of rungs were large compared to when it was done with bit shifting. (~300 vs ~100)
+but expandability was a big plus, as when i added blinking lights it was a piece of cake.
+
