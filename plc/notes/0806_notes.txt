@@ -1,0 +1,31 @@
+Inverter Module / Motor
+=================
+
+- anatomy basics of a motor
+- kirchoff's laws, Y-delta transforms
+
+- typical circuit set up 
+	- main circuit (L1, L2, L3, 3phase input with MC components to run a load/motor)
+	- control circuit (logic, and intended interaction)
+
+motor "speed" is done in 2 ways:
+N = 120f / p
+
+- control p, which is 극수 dependant (changes with number of coils, i.e. p=2 for 1~3, p=4 for 6 coils ? not sure. need to confirm)
+
+comes inverter to allow RPM control with frequency
+- we can change the frequency (f) to change rpm
+
+
+intervert module:
+
+parameter value changing
+
+P 79 -> 3 = operate
+
+P 7, 8 -> ramp up / cool down time (second)
+
+
+----
+Frequency modulated RPM exercise
+
