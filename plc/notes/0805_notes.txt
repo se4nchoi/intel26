@@ -6,13 +6,15 @@ today's todo:
 
 new room, new configs. 
 
+0) set PLC parameter -> network parameter, set it to the assigned IP address (that is not an overlap)
+-> and perform RESET to register that address onto the network
+
 1) you need to confirm IP address with an initial USB connection FIRST
 (plc, usb, no spec => check connection)
--> and perform a RESET of CPU to apply the IP addr
 
 2) create a 2nd connection setting - ETHERNET
 this room has the Q03UDV CPU, so has direct ETHERNET connection (diff from Q02H, where you needed to use an ethernet module)
-
+-> use the registered IP from step 0 after loading the listed IP addresses on the network
 
 ====
 practice for HMI integration/coursework :
