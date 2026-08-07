@@ -1,0 +1,45 @@
+Inverter - 2
+==========
+
+- this mitsubishi interver (the module we have) has 15 variable frequencies we can supply;
+(other models may have n variable frequencies)
+
+
+exercise 2) control inverter with Analog
+
+AD , DA module -> identify why Diagnose (D) 진단 -> 시스템모니터 (S)
+-> find slot, I/O address
+
+인텔리전스 모듈
+intelligence module
+
+
+Finishing off the user manual:
+- variable resistance to control speed
+- 15, 7 step variable frequency control with the right wiring
+
+t
+========================
+	intro to robotic controls
+========================
+
+- a classic robot-process involves (usually) a conveyor belt <<< this is where an inverter needs to be <<< what we will address this hour
+
++ CC Link
+- separation of PLC , and I/O modules (can't connect all wires from sensors to the PLC from hundreds of meters away!)
+
+
+
+I/O modules
+(PLC parameter -> I/O 할당 -> CC Link QJ61BT11N)
+
+- as a convention, we use x100, y100 as I/O addresses for CC-Link I/O modules
+- Network parameter -> CC Link ->Station Info Setting -> may need to 'reserve' card if lab PLC does not have 3/4 I/O cards)
+in this lab setting, we use 4 CARD slots (can go upto 64)
+	1) 8p Input 		(X100)
+	2) 8p Output		(Y100)	
+			=> but we use Y120 by convention, to leave room for expansion
+	3) 8p Input (robot)
+	4) 8p Output (robot)
+refer to __스마트설비제어_강의.pdf
+for CC-LINK wiring
