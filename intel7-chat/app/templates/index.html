@@ -6,12 +6,16 @@
   <title>{{ service_name }}</title>
   <meta name="description" content="교실 내부 LAN 전용 실시간 채팅 서비스" />
   <link rel="stylesheet" href="/static/style.css" />
+  <link rel="icon" type="image/png" href="/static/stealth-chat-logo.png" />
 </head>
 <body>
 
   <!-- 닉네임 모달 -->
   <div id="nickname-modal" class="modal-backdrop" role="dialog" aria-modal="true">
     <div class="modal-box">
+      <div class="modal-logo-container">
+        <img src="/static/stealth-chat-logo.png" alt="Logo" class="modal-logo" />
+      </div>
       <h2>{{ service_name }}에 입장하기</h2>
       <p class="modal-warning">⚠️ 10시간 후 모든 채팅 메시지는 삭제됩니다.</p>
       <p class="modal-desc">사용할 닉네임을 입력하세요 (최대 30자)</p>
@@ -27,7 +31,10 @@
     <!-- 헤더 -->
     <header class="app-header">
       <button id="sidebar-toggle" class="icon-btn sidebar-toggle-btn" title="사이드바">&#9776;</button>
-      <h1 class="service-name">{{ service_name }}</h1>
+      <div class="header-logo-container">
+        <img src="/static/stealth-chat-logo.png" alt="Logo" class="header-logo" />
+        <h1 class="service-name">{{ service_name }}</h1>
+      </div>
       <div class="header-right">
         <span id="my-nick-badge" class="my-nick-badge"></span>
         <span id="conn-status" class="conn-status disconnected">연결 끊김</span>

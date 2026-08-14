@@ -95,10 +95,24 @@ button {
   gap: 14px;
 }
 
+.modal-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.modal-logo {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+}
+
 .modal-box h2 {
   font-size: 1.3rem;
   font-weight: 700;
   color: var(--accent);
+  text-align: center;
 }
 
 .modal-warning {
@@ -179,11 +193,23 @@ button {
   font-size: 1.2rem;
 }
 
+.header-logo-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.header-logo {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+}
+
 .service-name {
   font-size: 1rem;
   font-weight: 700;
   color: var(--accent);
-  flex: 1;
 }
 
 .header-right {
