@@ -60,16 +60,23 @@ function initConversations() {
   });
 }
 
+function displayNickname(nick, ipSuffix = '') {
+  return ipSuffix ? `${nick} (${ipSuffix})` : nick;
+}
+
 /** DM 대화를 가져오거나 새로 생성 */
-function getOrCreateDm(nick) {
+function getOrCreateDm(nick, ipSuffix = '') {
   if (!conversations.has(nick)) {
     conversations.set(nick, {
       id:       nick,
       name:     nick,
+      ipSuffix,
       type:     'dm',
       messages: [],
       unread:   0,
     });
+  } else if (ipSuffix) {
+    conversations.get(nick).ipSuffix = ipSuffix;
   }
   return conversations.get(nick);
 }
@@ -144,12 +151,13 @@ function switchConv(id) {
   conv.unread = 0;
 
   // 타이틀 업데이트
-  chatAreaTitle.textContent = conv.type === 'global' ? '🌐 전체 채팅' : `💬 ${conv.name}`;
+  const convDisplayName = displayNickname(conv.name, conv.ipSuffix);
+  chatAreaTitle.textContent = conv.type === 'global' ? '🌐 전체 채팅' : `💬 ${convDisplayName}`;
 
   // 입력 placeholder 변경
   msgInput.placeholder = conv.type === 'global'
     ? '메시지를 입력하세요 (Enter로 전송)'
-    : `${conv.name}에게 DM... (Enter로 전송)`;
+    : `${convDisplayName}에게 DM... (Enter로 전송)`;
 
   // 메시지 렌더링
   renderMessages();
@@ -194,7 +202,9 @@ function renderOnlineList(users) {
   onlineCountEl.textContent = users.length;
   onlineListEl.innerHTML = '';
 
-  users.forEach(nick => {
+  users.forEach(user => {
+    const nick = user.nickname;
+    const ipSuffix = user.ip_suffix || '';
     const li = document.createElement('li');
     li.className = 'online-item';
 
@@ -203,7 +213,7 @@ function renderOnlineList(users) {
 
     const nickEl = document.createElement('span');
     nickEl.className = 'online-nick' + (nick === myNickname ? ' is-me' : '');
-    nickEl.textContent = nick + (nick === myNickname ? ' (나)' : '');
+    nickEl.textContent = displayNickname(nick, ipSuffix) + (nick === myNickname ? ' (나)' : '');
 
     li.appendChild(dot);
     li.appendChild(nickEl);
@@ -214,14 +224,14 @@ function renderOnlineList(users) {
       dmBtn.textContent = 'DM';
       dmBtn.addEventListener('click', e => {
         e.stopPropagation();
-        getOrCreateDm(nick);
+        getOrCreateDm(nick, ipSuffix);
         renderConvList();
         switchConv(nick);
       });
       li.appendChild(dmBtn);
 
       li.addEventListener('click', () => {
-        getOrCreateDm(nick);
+        getOrCreateDm(nick, ipSuffix);
         renderConvList();
         switchConv(nick);
       });
@@ -293,7 +303,7 @@ function appendMsgNode(msg) {
     meta.className = 'msg-meta';
     const nickEl = document.createElement('span');
     nickEl.className = 'nick';
-    nickEl.textContent = msg.nickname;
+    nickEl.textContent = displayNickname(msg.nickname, msg.ip_suffix);
     const timeEl = document.createElement('span');
     timeEl.textContent = formatTime(msg.created_at);
     meta.appendChild(nickEl);
@@ -316,7 +326,9 @@ function appendMsgNode(msg) {
 
     const label = document.createElement('div');
     label.className = 'dm-label';
-    label.textContent = isSent ? `→ ${msg.to_nick}` : `← ${msg.from_nick}`;
+    label.textContent = isSent
+      ? `→ ${displayNickname(msg.to_nick, msg.to_ip_suffix)}`
+      : `← ${displayNickname(msg.from_nick, msg.from_ip_suffix)}`;
 
     const meta = document.createElement('div');
     meta.className = 'msg-meta';
@@ -420,6 +432,7 @@ function initWebSocket() {
         addMessage(GLOBAL_ID, {
           msgType:    'chat',
           nickname:   data.nickname,
+          ip_suffix:  data.ip_suffix || '',
           content:    data.content,
           created_at: data.created_at,
         });
@@ -428,13 +441,18 @@ function initWebSocket() {
       case 'dm': {
         // 어느 대화에 넣을지 결정 (나 기준: 상대방 닉네임이 convId)
         const partner = data.from_nick === myNickname ? data.to_nick : data.from_nick;
-        getOrCreateDm(partner);
+        const partnerIpSuffix = data.from_nick === myNickname
+          ? (data.to_ip_suffix || '')
+          : (data.from_ip_suffix || '');
+        getOrCreateDm(partner, partnerIpSuffix);
         renderConvList();
         addMessage(partner, {
           msgType:    'dm',
-          from_nick:  data.from_nick,
-          to_nick:    data.to_nick,
-          content:    data.content,
+          from_nick:       data.from_nick,
+          to_nick:         data.to_nick,
+          from_ip_suffix: data.from_ip_suffix || '',
+          to_ip_suffix:   data.to_ip_suffix || '',
+          content:         data.content,
           created_at: data.created_at,
         });
         // 자동으로 해당 DM 탭으로 전환 (수신 시 + 해당 탭이 비활성일 때)

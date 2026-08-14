@@ -2,6 +2,7 @@
 database.py - SQLite 데이터베이스 관리
 """
 
+import ipaddress
 import sqlite3
 import os
 from datetime import datetime, timezone, timedelta
@@ -9,9 +10,20 @@ from typing import List, Dict, Any
 
 # ----- 설정 -----
 DB_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "chat.db")
-# 메시지 보관 기간 (일 단위) - 이 값만 변경하면 됨
-MESSAGE_RETENTION_DAYS = 7
+# 공개 메시지와 기록된 IP의 보관 기간 (시간 단위)
+MESSAGE_RETENTION_HOURS = 10
 # ----------------
+
+
+def get_ip_suffix(ip: str) -> str:
+    """화면 표시용으로 IPv4 마지막 두 옥텟(IPv6는 마지막 두 그룹)만 반환한다."""
+    try:
+        address = ipaddress.ip_address(ip)
+    except ValueError:
+        return ""
+    if isinstance(address, ipaddress.IPv4Address):
+        return ".".join(str(address).split(".")[-2:])
+    return ":".join(address.exploded.split(":")[-2:])
 
 
 def get_connection() -> sqlite3.Connection:
@@ -48,7 +60,7 @@ def init_db() -> None:
 
 def delete_expired_messages() -> int:
     """보관 기간이 지난 메시지를 삭제하고 삭제된 건수를 반환한다."""
-    cutoff = datetime.now(timezone.utc) - timedelta(days=MESSAGE_RETENTION_DAYS)
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=MESSAGE_RETENTION_HOURS)
     cutoff_str = cutoff.strftime("%Y-%m-%dT%H:%M:%SZ")
     with get_connection() as conn:
         cursor = conn.execute(
@@ -72,13 +84,13 @@ def save_message(nickname: str, content: str, ip: str = "") -> Dict[str, Any]:
 
 
 def get_recent_messages(limit: int = 100) -> List[Dict[str, Any]]:
-    """보관 기간 내 최근 메시지를 시간 오름차순으로 반환한다. (ip 제외해서 클라이언트에 노출 안 함)"""
-    cutoff = datetime.now(timezone.utc) - timedelta(days=MESSAGE_RETENTION_DAYS)
+    """보관 기간 내 최근 메시지를 반환한다. 전체 IP는 제외하고 화면용 suffix만 포함한다."""
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=MESSAGE_RETENTION_HOURS)
     cutoff_str = cutoff.strftime("%Y-%m-%dT%H:%M:%SZ")
     with get_connection() as conn:
         rows = conn.execute(
             """
-            SELECT id, nickname, content, created_at
+            SELECT id, nickname, content, created_at, ip
             FROM messages
             WHERE created_at >= ?
             ORDER BY created_at ASC
@@ -86,4 +98,13 @@ def get_recent_messages(limit: int = 100) -> List[Dict[str, Any]]:
             """,
             (cutoff_str, limit),
         ).fetchall()
-    return [dict(row) for row in rows]
+    return [
+        {
+            "id": row["id"],
+            "nickname": row["nickname"],
+            "content": row["content"],
+            "created_at": row["created_at"],
+            "ip_suffix": get_ip_suffix(row["ip"]),
+        }
+        for row in rows
+    ]
