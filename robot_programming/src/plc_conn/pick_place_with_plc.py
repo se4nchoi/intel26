@@ -4,8 +4,8 @@ PLC-Integrated Pick & Place Sequence for Neuromeka IndyDCP3 Robot
 
 I/O & PLC Mapping:
 ------------------
-  * PLC Input X102 -> Push Button 1 (PB1) -> Robot DI8
-  * PLC Input X103 -> Push Button 2 (PB2) -> Robot DI9
+  * PLC Input X103 -> Push Button 1 (PB1) -> Robot DI8
+  * PLC Input X104 -> Push Button 2 (PB2) -> Robot DI9
   * Workpiece Sensor (Magazine Sensor)    -> Robot DI3
   * Gripper Open Solenoid                 -> Robot DO0 (Interlocked)
   * Gripper Close Solenoid                -> Robot DO1 (Interlocked)
@@ -31,6 +31,7 @@ Operational Logic:
 
 import time
 import sys
+import math
 from typing import List, Optional
 from neuromeka import IndyDCP3, OpState, TaskBaseType, JointBaseType
 
@@ -53,8 +54,8 @@ APPROACH_CLEARANCE_Z = 100.0
 # DIGITAL I/O MAPPINGS
 # ------------------------------------------------------------------------------
 DI_MAGAZINE_SENSOR = 3   # Magazine part presence sensor (Must be ON to pick)
-DI_PB1             = 8   # PLC X102 -> Push Button 1 (Trigger Stage 1)
-DI_PB2             = 9   # PLC X103 -> Push Button 2 (Trigger Stage 2)
+DI_PB1             = 8   # PLC X103 -> Push Button 1 (Trigger Stage 1)
+DI_PB2             = 9   # PLC X104 -> Push Button 2 (Trigger Stage 2)
 
 DO_GRIPPER_OPEN    = 0   # Digital Output channel for gripper OPEN solenoid
 DO_GRIPPER_CLOSE   = 1   # Digital Output channel for gripper CLOSE solenoid
@@ -127,44 +128,34 @@ def close_gripper(indy: IndyDCP3, wait: bool = True):
 
 
 # ==============================================================================
-# ROBOT MOTION CONTROL & SAFETY SYNCHRONIZATION
+# ROBOT MOTION CONTROL WITH REAL-TIME SAFETY MONITORING
 # ==============================================================================
 def wait_move_done(indy: IndyDCP3, timeout: float = 30.0) -> bool:
-    """
-    Blocks synchronously until robot motion is completed and controller settles in IDLE.
-    Aborts immediately if emergency stop, collision, or violation occurs.
-    """
     start_time = time.time()
-
-    # 1. Brief startup check to let controller transition into moving state
     while time.time() - start_time < 0.3:
         if indy.get_motion_data().get("is_in_motion", False):
             break
         time.sleep(0.02)
 
-    # 2. Safety and completion loop
     while time.time() - start_time < timeout:
         m_data = indy.get_motion_data()
         r_data = indy.get_robot_data()
         op_state = r_data.get("op_state")
 
-        # Emergency / Violation handling
         if op_state in [OpState.VIOLATE, OpState.VIOLATE_HARD, OpState.COLLISION, OpState.STOP_AND_OFF]:
             print(f"\n[ALERT] Motion aborted due to emergency/collision state: {op_state}")
             return False
 
-        # Target reached and robot settled in IDLE
         if not m_data.get("is_in_motion", False) and op_state == OpState.IDLE:
             return True
 
-        time.sleep(0.03)
+        time.sleep(0.02)
 
-    print("\n[TIMEOUT] Motion did not complete within the timeout limit.")
+    print("\n[TIMEOUT] Motion did not complete within the expected window.")
     return False
 
 
 def movel_abs(indy: IndyDCP3, pose: List[float], vel_ratio: int = ACTION_VEL_RATIO, acc_ratio: int = ACTION_ACC_RATIO) -> bool:
-    """Performs an absolute Cartesian linear move (MoveL)."""
     indy.movel(
         ttarget=list(pose),
         base_type=TaskBaseType.ABSOLUTE,
@@ -181,11 +172,44 @@ def move_home(indy: IndyDCP3) -> bool:
     return wait_move_done(indy)
 
 
-def get_approach_pose(target_pose: List[float], clearance: float = APPROACH_CLEARANCE_Z) -> List[float]:
-    """Generates an approach pose directly above the target (Z + clearance)."""
-    approach = list(target_pose)
-    approach[2] += clearance
-    return approach
+def get_approach_pose(target_pose: List[float], clearance: float = APPROACH_CLEARANCE_Z, indy: Optional[IndyDCP3] = None) -> List[float]:
+    """
+    Computes the 3D approach/retract pose backed off along the tool's approach angle (TCP Z-axis vector).
+    Instead of moving straight up in World Z, this moves collinear with the tool orientation,
+    allowing the robot to plunge straight in and retract straight out at the exact approach angle.
+    """
+    if indy is not None:
+        try:
+            res = indy.calculate_current_pose_rel(
+                current_pos=list(target_pose),
+                relative_pos=[0.0, 0.0, -clearance, 0.0, 0.0, 0.0],
+                base_type=TaskBaseType.TCP,
+            )
+            if isinstance(res, dict) and "calculated_pos" in res:
+                return res["calculated_pos"]
+        except Exception:
+            pass
+
+    # Direct kinematic projection along tool Z vector:
+    # Tool Z vector in base frame: R[:, 2] from R = Rz(w) * Ry(v) * Rx(u)
+    u = math.radians(target_pose[3])
+    v = math.radians(target_pose[4])
+    w = math.radians(target_pose[5])
+
+    cu, su = math.cos(u), math.sin(u)
+    cv, sv = math.cos(v), math.sin(v)
+    cw, sw = math.cos(w), math.sin(w)
+
+    zx = cw * sv * cu + sw * su
+    zy = sw * sv * cu - cw * su
+    zz = cv * cu
+
+    # Retract is along -Z_tool direction
+    app_x = target_pose[0] - clearance * zx
+    app_y = target_pose[1] - clearance * zy
+    app_z = target_pose[2] - clearance * zz
+
+    return [app_x, app_y, app_z, target_pose[3], target_pose[4], target_pose[5]]
 
 
 # ==============================================================================
@@ -216,8 +240,8 @@ def execute_stage_1(indy: IndyDCP3) -> bool:
         print("  [ERROR] Magazine sensor DI3 is OFF! No workpiece found in magazine. Aborting Stage 1.")
         return False
 
-    pick_approach = get_approach_pose(PICK_LOCATION)
-    drop_approach = get_approach_pose(DROP_LOCATION)
+    pick_approach = get_approach_pose(PICK_LOCATION, indy=indy)
+    drop_approach = get_approach_pose(DROP_LOCATION, indy=indy)
 
     # Step 1: Open gripper while approaching pick location
     print("  1. Opening gripper & moving to Pick Approach...")
@@ -278,8 +302,8 @@ def execute_stage_2(indy: IndyDCP3) -> bool:
     print("  [STAGE 2] Starting: Pick (Drop Pos) -> Magazine Insert")
     print("=======================================================")
 
-    drop_approach = get_approach_pose(DROP_LOCATION)
-    mag_insert_approach = get_approach_pose(MAGAZINE_INSERT_LOCATION)
+    drop_approach = get_approach_pose(DROP_LOCATION, indy=indy)
+    mag_insert_approach = get_approach_pose(MAGAZINE_INSERT_LOCATION, indy=indy)
 
     # Step 1: Open gripper and move to drop approach
     print("  1. Opening gripper & moving to Drop Approach...")
@@ -339,8 +363,8 @@ def run_plc_listener(indy: IndyDCP3):
     print("\n" + "=" * 65)
     print("      PLC I/O PICK & PLACE CONTROLLER RUNNING")
     print("=" * 65)
-    print(f"  * PB1 Trigger (Stage 1) -> Robot DI{DI_PB1} (PLC X102)")
-    print(f"  * PB2 Trigger (Stage 2) -> Robot DI{DI_PB2} (PLC X103)")
+    print(f"  * PB1 Trigger (Stage 1) -> Robot DI{DI_PB1} (PLC X103)")
+    print(f"  * PB2 Trigger (Stage 2) -> Robot DI{DI_PB2} (PLC X104)")
     print(f"  * Magazine Sensor       -> Robot DI{DI_MAGAZINE_SENSOR}")
     print(f"  * Gripper Solenoids     -> Robot DO{DO_GRIPPER_OPEN}(Open) / DO{DO_GRIPPER_CLOSE}(Close) [Interlocked]")
     print("=" * 65)

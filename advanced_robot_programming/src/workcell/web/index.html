@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="workcell-token" content="__TOKEN__">
+  <title>Workcell · Operator console</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+<header><a class="brand" href="/">▧ <span>WORKCELL</span></a><span class="muted">INDY / RGB-D / MELSEC</span><span id="mode" class="badge">CONNECTING</span></header>
+<main>
+  <section class="heading"><div><p class="eyebrow">OPERATOR CONSOLE</p><h1>One cell. Every step accounted for.</h1><p class="muted" id="mode-description">Connecting to the controller…</p></div><button id="stop" class="stop">■ Controlled stop</button></section>
+  <div id="connection-error" class="alert" hidden>Dashboard connection lost. Status is stale; use the physical controls if needed.</div>
+  <div id="fault" class="alert" role="alert" hidden></div>
+  <section class="status-strip"><div><span class="label">CELL STATE</span><strong id="state">INITIALIZING</strong></div><div><span class="label">ROBOT</span><strong id="robot-status">—</strong></div><div><span class="label">PLC PERMIT</span><strong id="plc-status">—</strong></div><div><span class="label">PALLET OCCUPANCY</span><strong id="count">0 / 8</strong></div></section>
+  <div class="workspace">
+    <section class="panel camera-panel"><div class="panel-title"><h2>Inspection station</h2><span id="source" class="badge">—</span></div><div class="camera"><img id="camera" alt="Current inspection camera frame"><div id="camera-unavailable">Waiting for a current frame</div></div><div class="detection"><div><span class="label">LATEST OBSERVATION</span><strong id="part">No part detected</strong></div><span id="confidence" class="muted">—</span></div><p class="muted small" id="vision-error">Parts must be seated in the taught pickup fixture.</p></section>
+    <section class="panel"><div class="panel-title"><h2>Pallet inventory</h2><span class="muted small">Persistent state</span></div><div id="pallet"></div><div class="legend"><span>○ Empty</span><span class="occupied">● Occupied</span><span class="reserved">● Reserved</span><span class="unknown">● Unknown</span></div><hr><h2>Cycle controls</h2><p class="muted small">Enable the cell, then request one inspection and transfer.</p><div class="actions"><button id="enable">Enable cell</button><button id="start" class="primary">Start cycle →</button><button id="disable" class="secondary">Disable</button></div><p id="command-result" class="small" aria-live="polite">No commands issued.</p><p class="muted small">Controlled stop requests a software stop. Use the physical emergency stop for emergencies.</p></section>
+  </div>
+  <section id="simulation" class="panel" hidden><div class="panel-title"><h2>Simulation bench</h2><span class="badge">NO HARDWARE CONNECTED</span></div><div class="form-row"><label>Part<select id="sim-part"><option value="red_cube">Red cube → pallet</option><option value="blue_cylinder">Blue cylinder → magazine</option><option value="none">Empty fixture</option></select></label><label>Failure injection<select id="sim-fault"><option value="none">None</option><option value="grip_failure">Grip feedback failure</option><option value="release_failure">Release feedback failure</option><option value="motion_failure">Motion failure</option><option value="robot_disconnect">Robot disconnect</option><option value="plc_disconnect">PLC disconnect</option><option value="camera_disconnect">Camera disconnect</option><option value="stale_detection">Stale detection</option></select></label><button id="apply-scenario">Apply scenario</button></div></section>
+  <section class="panel"><details id="recovery"><summary>Recovery &amp; pallet change <span class="muted small">Requires disabled cell and an inspection record</span></summary><p class="muted small">Clear the fixture and gripper as required. Inspect uncertain slots before reconciling them. Acknowledging a fault does not move the robot or restart the cell.</p><div class="form-row"><label class="wide">Inspection note<input id="note" placeholder="What was inspected and corrected?" maxlength="500"></label><label class="check"><input type="checkbox" id="inspected"> I inspected the cell and confirmed recovery is appropriate</label></div><div class="actions"><button id="reset" class="secondary">Acknowledge fault</button><button id="replace-pallet" class="secondary">Record empty replacement pallet</button></div><div class="form-row"><label>Unknown slot<select id="unknown-slot"></select></label><label>Observed occupancy<select id="occupancy"><option value="true">Occupied</option><option value="false">Empty</option></select></label><button id="reconcile" class="secondary">Reconcile slot</button></div></details></section>
+  <section class="panel"><div class="panel-title"><h2>Cycle journal</h2><span class="muted small">Most recent 30 cycles</span></div><div class="table-wrap"><table><thead><tr><th>CYCLE</th><th>STARTED</th><th>PART</th><th>DESTINATION</th><th>RESULT</th><th>DETAIL</th></tr></thead><tbody id="history"><tr><td colspan="6">No cycles yet. Enable the cell to begin.</td></tr></tbody></table></div></section>
+  <footer><span>Fixed-pick sorting · candidate recipe requires physical commissioning</span><span id="config-hash"></span></footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,41 @@
+# Candidate poses from the old project, NOT commissioned measurements.
+mode = "simulation"
+commissioned = false
+commissioning_reference = ""
+database = "../data/simulation.sqlite3"
+
+[robot]
+host = "192.168.3.7"
+velocity_percent = 5
+acceleration_percent = 10
+# Placeholder wiring. Verify before commissioning.
+close_do = 0
+closed_di = 0
+open_di = 1
+part_present_di = 2
+
+[plc]
+host = "192.168.3.150"
+port = 5010
+
+[workspace]
+x = [-50.0, 650.0]
+y = [100.0, 650.0]
+z = [150.0, 650.0]
+
+[vision]
+roi = [160, 120, 320, 240]
+min_confidence = 0.75
+max_age_s = 1.0
+
+[recipe]
+pick = [232.49, 514.57, 254.19, -19.52, -179.64, 90.03]
+pallet_base = [201.75, 219.29, 304.94, -3.24, -179.44, 90.01]
+magazine = [-8.15, 515.98, 343.32, -19.46, -177.65, 90.01]
+transfer_z_mm = 450.0
+columns = 2
+rows = 2
+layers = 2
+row_step_mm = 80.0
+column_step_mm = 80.0
+layer_step_mm = 30.0
