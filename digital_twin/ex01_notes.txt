@@ -1,0 +1,23 @@
+* 각 PLC i/o 를 전부 맞춤으로 할 수 없으니, OPC 규격으로 맞추고, twin - OPC - PLC (x/y/p 등) 연결
+
+
+======
+Input
+======
+btn0	> OPC(ex01.X0)	x0
+btn1	> OPC	x1
+sensor 		x5
+
+======
+output
+======
+conveyor		y20
+stopper		y21
+
+
+생성		y28
+제거		y29
+
+
+
+

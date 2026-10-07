@@ -1,0 +1,295 @@
+<!DOCTYPE html> <html lang="ko"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>스마트팩토리 - FACTORY I/O 필기 정리</title> <style> :root { --navy: #425B9A; --sky: #76C0EC; --cream: #FFF6DC; --pink: #FF95A5; --white: #FFFFFF; --text: #26324A; --muted: #64748B; --border: #D9E2F2; --shadow: 0 8px 24px rgba(66, 91, 154, 0.12); } * { box-sizing: border-box; } body { margin: 0; background: #F5F8FC; color: var(--text); font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif; line-height: 1.7; } .container { width: min(1000px, calc(100% - 32px)); margin: 40px auto; } /* Header */ .header { background: linear-gradient( 135deg, var(--navy), #5578C2 ); color: var(--white); padding: 42px 44px; border-radius: 24px; box-shadow: var(--shadow); margin-bottom: 28px; } .header .category { display: inline-block; background: var(--pink); color: #5A2630; padding: 5px 13px; border-radius: 999px; font-size: 13px; font-weight: 800; margin-bottom: 14px; } .header h1 { margin: 0; font-size: 32px; letter-spacing: -1px; } .header p { margin: 10px 0 0; color: #EAF3FF; font-size: 15px; } /* Section */ .section { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 30px; margin-bottom: 22px; box-shadow: var(--shadow); } .section-title { display: flex; align-items: center; gap: 12px; margin: 0 0 24px; color: var(--navy); font-size: 24px; } .section-title::before { content: ""; width: 8px; height: 30px; border-radius: 10px; background: var(--pink); flex-shrink: 0; } h3 { color: var(--navy); font-size: 19px; margin: 26px 0 12px; } h3:first-of-type { margin-top: 0; } /* Note */ .note { background: var(--cream); border-left: 5px solid var(--pink); padding: 15px 18px; border-radius: 10px; margin: 14px 0; } .note strong { color: var(--navy); } /* Camera */ .camera-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 15px; } .camera-card { border: 1px solid var(--border); border-radius: 14px; padding: 18px; background: #FAFCFF; } .camera-card .number { color: var(--pink); font-weight: 900; font-size: 13px; } .camera-card h4 { margin: 5px 0 8px; color: var(--navy); font-size: 16px; } .camera-card p { margin: 0; font-size: 14px; color: var(--muted); } /* Menu */ .menu-list { display: grid; gap: 10px; } .menu-item { display: flex; align-items: center; gap: 14px; padding: 13px 16px; background: #F4FAFF; border: 1px solid #D8ECF8; border-radius: 12px; } .menu-key { min-width: 165px; color: var(--navy); font-weight: 800; } /* Sensor */ .sensor-card { border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin: 14px 0; background: #FFFFFF; } .sensor-name { color: var(--navy); font-size: 18px; font-weight: 900; margin-bottom: 8px; } .sensor-desc { color: var(--muted); margin-bottom: 12px; } .tag { display: inline-block; padding: 3px 9px; margin: 2px; border-radius: 7px; background: var(--sky); color: #173A55; font-size: 12px; font-weight: 800; } /* Mode */ .mode-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 14px; } .mode { padding: 15px; border-radius: 12px; background: var(--cream); border: 1px solid #F4E9C5; } .mode strong { display: block; color: var(--navy); margin-bottom: 4px; } .mode span { font-size: 13px; color: var(--muted); } /* Emitter / Remover */ .function-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; } .function-card { border-radius: 18px; padding: 22px; border: 1px solid var(--border); } .function-card.emitter { background: #F2FAFF; border-top: 6px solid var(--sky); } .function-card.remover { background: #FFF4F6; border-top: 6px solid var(--pink); } .function-card h3 { margin-top: 0; } .function-card ul { margin: 10px 0 0; padding-left: 20px; } .function-card li { margin: 5px 0; } /* Quick summary */ .summary { background: var(--navy); color: white; border-radius: 20px; padding: 26px 30px; margin-top: 22px; } .summary h2 { margin: 0 0 14px; font-size: 20px; } .summary-list { margin: 0; padding-left: 20px; color: #E9F2FF; } .summary-list li { margin: 5px 0; } /* Footer */ footer { text-align: center; color: var(--muted); font-size: 12px; padding: 20px; } @media (max-width: 700px) { .container { width: min(100% - 20px, 1000px); margin: 20px auto; } .header { padding: 30px 24px; } .header h1 { font-size: 26px; } .section { padding: 22px; } .camera-grid, .mode-grid, .function-grid { grid-template-columns: 1fr; } .menu-item { display: block; } .menu-key { margin-bottom: 3px; } } </style> </head> <body> <div class="container">
+<header class="header">
+    <span class="category">스마트팩토리 · 디지털트윈</span>
+    <h1>FACTORY I/O 필기 정리</h1>
+    <p>가상 공장 환경에서 센서 · 오브젝트 · I/O를 이해하기 위한 실습 노트</p>
+</header>
+
+
+<!-- 01 카메라 -->
+<section class="section">
+    <h2 class="section-title">01. 시점 / Camera</h2>
+
+    <div class="camera-grid">
+
+        <div class="camera-card">
+            <div class="number">01</div>
+            <h4>Orbit Camera</h4>
+            <p>
+                오브젝트를 중심으로 주변을 회전하며 보는 시점
+            </p>
+            <p>
+                <strong>실습:</strong> 우클릭으로 시점 변경
+            </p>
+        </div>
+
+        <div class="camera-card">
+            <div class="number">02</div>
+            <h4>Fly Camera</h4>
+            <p>
+                3D 공간을 자유롭게 날아다니는 것처럼 이동하는 시점
+            </p>
+        </div>
+
+        <div class="camera-card">
+            <div class="number">03</div>
+            <h4>First Person Camera</h4>
+            <p>
+                사람의 눈높이에서 보는 1인칭 시점
+            </p>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- 02 메뉴 -->
+<section class="section">
+    <h2 class="section-title">02. 메뉴 / Tags</h2>
+
+    <div class="menu-list">
+
+        <div class="menu-item">
+            <span class="menu-key">Dock All Tags</span>
+            <span>현재 장면의 모든 태그를 화면에 표시</span>
+        </div>
+
+        <div class="menu-item">
+            <span class="menu-key">Clear Docked Tags</span>
+            <span>화면에 고정해 둔 태그 표시를 제거</span>
+        </div>
+
+    </div>
+
+    <div class="note">
+        <strong>필기 포인트</strong><br>
+        Tag는 센서나 장치의 상태를 PLC 등의 제어 시스템과 연결할 때 사용하는 I/O 이름이라고 생각하면 된다.
+    </div>
+</section>
+
+
+<!-- 03 센서 -->
+<section class="section">
+    <h2 class="section-title">03. 센서류 / Sensors</h2>
+
+    <!-- Retroreflective -->
+    <div class="sensor-card">
+
+        <div class="sensor-name">
+            Retroreflective Sensor + Reflector
+        </div>
+
+        <div class="sensor-desc">
+            센서와 반사판(Reflector)이 서로 마주 보도록 설치하여
+            광선이 끊어지는지를 감지한다.
+        </div>
+
+        <span class="tag">B접점 개념</span>
+        <span class="tag">Reflector 필요</span>
+        <span class="tag">물체 감지</span>
+
+        <div class="note">
+            <strong>핵심:</strong>
+            센서 ↔ Reflector 사이의 빛이 물체에 의해 차단되는지를 확인한다.
+        </div>
+
+    </div>
+
+
+    <!-- Light Array -->
+    <div class="sensor-card">
+
+        <div class="sensor-name">
+            Light Array Emitter + Light Array Receiver
+        </div>
+
+        <div class="sensor-desc">
+            여러 개의 평행한 빛을 이용하여 물체가 어느 정도 영역을
+            가리고 있는지를 감지한다.
+        </div>
+
+        <span class="tag">8 Beam</span>
+        <span class="tag">Numerical</span>
+        <span class="tag">Digital</span>
+        <span class="tag">Analog</span>
+
+        <div class="mode-grid">
+
+            <div class="mode">
+                <strong>Numerical</strong>
+                <span>
+                    8개의 빔 상태를 하나의 숫자값으로 표현.
+                    각 비트가 각 빔을 나타낸다.
+                </span>
+            </div>
+
+            <div class="mode">
+                <strong>Digital</strong>
+                <span>
+                    각 Beam을 개별적인 ON/OFF 비트로 확인.
+                </span>
+            </div>
+
+            <div class="mode">
+                <strong>Analog</strong>
+                <span>
+                    차단된 Beam의 개수에 따라 0~10V 범위의
+                    아날로그 값으로 표현.
+                </span>
+            </div>
+
+        </div>
+
+        <div class="note">
+            <strong>암기:</strong>
+            Digital = 비트별 확인 / Numerical = 숫자 하나로 확인 /
+            Analog = 전압값으로 확인
+        </div>
+
+    </div>
+
+
+    <!-- Diffuse -->
+    <div class="sensor-card">
+
+        <div class="sensor-name">
+            Diffuse Sensor
+        </div>
+
+        <div class="sensor-desc">
+            센서에서 나온 빛의 반사를 이용하여 물체의 존재 여부를 감지한다.
+        </div>
+
+        <span class="tag">Digital</span>
+        <span class="tag">물체 감지</span>
+        <span class="tag">A접점 개념</span>
+
+        <div class="note">
+            <strong>핵심:</strong>
+            물체를 감지하면 센서의 Digital 신호가 ON 상태가 된다.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- 04 Emitter / Remover -->
+<section class="section">
+    <h2 class="section-title">04. 오브젝트 생성 / 제거</h2>
+
+    <div class="function-grid">
+
+        <div class="function-card emitter">
+
+            <h3>Emitter</h3>
+
+            <p>
+                장면(Scene)에 사용할 Item을 생성하는 기능.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>Base to Emit</strong><br>
+                    아래에 깔리는 Base를 생성
+                    <br>
+                    예: Pallet, Square Pallet, Stackable Box
+                </li>
+
+                <li>
+                    <strong>Part to Emit</strong><br>
+                    실제 생산물 또는 기본 오브젝트를 생성
+                    <br>
+                    예: Box, Raw Material, Product Lid 등
+                </li>
+            </ul>
+
+            <div class="note">
+                <strong>필기:</strong>
+                Emitter = 물체를 만들어서 공정에 투입
+            </div>
+
+        </div>
+
+
+        <div class="function-card remover">
+
+            <h3>Remover</h3>
+
+            <p>
+                특정 영역에 들어온 Item을 제거하는 기능.
+            </p>
+
+            <ul>
+                <li>생성된 물체를 장면에서 제거</li>
+                <li>Base 제거 가능</li>
+                <li>Part 제거 가능</li>
+                <li>Tag를 ON/OFF하여 활성화 또는 비활성화</li>
+            </ul>
+
+            <div class="note">
+                <strong>필기:</strong>
+                Remover = 공정이 끝난 물체를 제거
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- 핵심 요약 -->
+<div class="summary">
+
+    <h2>★ 핵심 암기</h2>
+
+    <ul class="summary-list">
+        <li>
+            <strong>Orbit</strong> → 주변을 돌며 보는 시점
+        </li>
+
+        <li>
+            <strong>Fly</strong> → 공간을 날아다니는 시점
+        </li>
+
+        <li>
+            <strong>First Person</strong> → 1인칭 시점
+        </li>
+
+        <li>
+            <strong>Retroreflective</strong> → Reflector와 함께 사용
+        </li>
+
+        <li>
+            <strong>Light Array</strong> → 8개의 Beam을 이용하여 감지
+        </li>
+
+        <li>
+            <strong>Numerical</strong> → 여러 Beam 상태를 숫자로 표현
+        </li>
+
+        <li>
+            <strong>Digital</strong> → ON/OFF 또는 비트 단위로 표현
+        </li>
+
+        <li>
+            <strong>Analog</strong> → 전압값으로 표현
+        </li>
+
+        <li>
+            <strong>Emitter</strong> → 오브젝트 생성
+        </li>
+
+        <li>
+            <strong>Remover</strong> → 오브젝트 제거
+        </li>
+    </ul>
+
+</div>
+
+
+<footer>
+    FACTORY I/O · 스마트팩토리 디지털트윈 실습 필기
+</footer>
+
+</div> </body> </html>
