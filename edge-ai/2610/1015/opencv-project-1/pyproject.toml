@@ -1,0 +1,19 @@
+[project]
+name = "opencv-project-1"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Sean Choi", email = "se4n.choi@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "opencv-python>=5.0.0.93",
+]
+
+[project.scripts]
+opencv-project-1 = "opencv_project_1:main"
+
+[build-system]
+requires = ["uv_build>=0.12.13,<0.13.0"]
+build-backend = "uv_build"
