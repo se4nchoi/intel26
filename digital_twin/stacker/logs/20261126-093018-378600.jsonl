@@ -1,0 +1,18 @@
+{"time": 1795653018.43523, "state": "IDLE", "completed": 0, "targets": [46, 47, 48, 49, 50, 51, 52, 53, 54, 45, 36, 35, 34, 33, 32, 31, 30, 29, 28, 19, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9]}
+{"time": 1795653422.653734, "state": "FEED", "completed": 0, "target": 46}
+{"time": 1795653429.3733037, "state": "PICK_LEFT", "completed": 0, "target": 46}
+{"time": 1795653436.2529593, "state": "TRAVEL", "completed": 0, "target": 46}
+{"time": 1795653441.3248544, "state": "PLACE_RIGHT", "completed": 0, "target": 46}
+{"time": 1795653448.1230628, "state": "RETURN_HOME", "completed": 0, "target": 46}
+{"time": 1795653453.254857, "state": "CYCLE_DONE", "completed": 1, "target": 46}
+{"time": 1795653453.254857, "state": "FEED", "completed": 1, "target": 47}
+{"time": 1795653459.9781508, "state": "PICK_LEFT", "completed": 1, "target": 47}
+{"time": 1795653466.9308603, "state": "TRAVEL", "completed": 1, "target": 47}
+{"time": 1795653472.0221767, "state": "PLACE_RIGHT", "completed": 1, "target": 47}
+{"time": 1795653478.7549803, "state": "RETURN_HOME", "completed": 1, "target": 47}
+{"time": 1795653483.937378, "state": "CYCLE_DONE", "completed": 2, "target": 47}
+{"time": 1795653483.937378, "state": "FEED", "completed": 2, "target": 48}
+{"time": 1795653490.6118412, "state": "PICK_LEFT", "completed": 2, "target": 48}
+{"time": 1795653497.4971914, "state": "TRAVEL", "completed": 2, "target": 48}
+{"time": 1795653501.8519833, "state": "PLACE_RIGHT", "completed": 2, "target": 48}
+{"time": 1795653509.1699176, "state": "FAULT", "completed": 2, "error": "[WinError 10053] 현재 연결은 사용자의 호스트 시스템의 소프트웨어의 의해 중단되었습니다", "stop_write_errors": ["Modbus Error: [Connection] ModbusTcpClient 192.168.0.117:502", "Modbus Error: [Connection] Failed to connect[ModbusTcpClient 192.168.0.117:502]", "Modbus Error: [Connection] Failed to connect[ModbusTcpClient 192.168.0.117:502]", "Modbus Error: [Connection] Failed to connect[ModbusTcpClient 192.168.0.117:502]", "Modbus Error: [Connection] Failed to connect[ModbusTcpClient 192.168.0.117:502]", "Modbus Error: [Connection] Failed to connect[ModbusTcpClient 192.168.0.117:502]"]}
